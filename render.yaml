@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: classification_api
+    env: python
+    region: singapore
+    buildCommand: './build.sh'
+    startCommand: 'gunicorn classification_api.wsgi:application'
+    plan: free
+    branch: master
+    healthCheckPath: /
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: WEB_CONCURRENCY
+        value: 4
+    autoDeploy: true
