@@ -8,5 +8,5 @@ from . import serializers
 class IndexView(viewsets.ViewSet):
     serializer_class = serializers.IndexSerializer
 
-    def index(self, request):
-        return JsonResponse({'msg': 'render_test'})
+    def post_response(self, request):
+        return JsonResponse({'msg': 'nice'})
