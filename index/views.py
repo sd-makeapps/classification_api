@@ -19,20 +19,7 @@ class IndexView(viewsets.ViewSet):
             input_file = request.FILES['input_file']
             if input_file.content_type == 'text/csv':
                 df = pd.read_csv(input_file)
-
-                # declare tokenize
-                def tokenize(text):
-                    tokenizer = Tokenizer()
-                    tokens = tokenizer.tokenize(text)
-                    return [token.surface for token in tokens]
-
-                # tokenize
-                try:
-                    tokenized_texts = [tokenize(text) for text in df['text']]
-                except MultiValueDictKeyError:
-                    return JsonResponse({'msg': 'csv file format is invalid'})
-
-                return JsonResponse({'msg': 'nice'})
+                return JsonResponse({'msg': df['text'].tolist()}, json_dumps_params={'ensure_ascii': False})
             else:
                 return JsonResponse({'msg': 'please input csv file'})
         except MultiValueDictKeyError:
